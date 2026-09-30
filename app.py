@@ -945,6 +945,11 @@ elif st.session_state.current_stage == "01  ENHANCE":
                 with st.spinner(f"Processing {target_alias}..."):
                     c_mode_sfx = f"{'pres' if perf_mode else 'full'}_{'comp' if compare_models else 'single'}"
                     c_key = f"{target_alias}_{c_mode_sfx}"
+                    if active_source is not None:
+                        src_to_run = active_source
+                    else:
+                        _fb_path = f"Main Data Sets/{target_alias}"
+                        src_to_run = _fb_path if os.path.exists(_fb_path) else "Main Data Sets/138.tif"
                     st.session_state.pipeline_cache[c_key] = multimodel_core.process_scene_pipeline(src_to_run, device=device, performance_mode=perf_mode, compute_candidate_b=compare_models)
                     st.session_state.active_scene_name = target_alias
                     st.rerun()
