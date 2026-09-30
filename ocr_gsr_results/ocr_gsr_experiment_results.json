@@ -1,0 +1,55 @@
+{
+  "experiment": "VISTAARA OCR-GSR Trainable Refinement",
+  "timestamp": "2026-09-29 06:18:40",
+  "training_time_seconds": 16.41,
+  "iterations": 100,
+  "learning_rate": 0.001,
+  "alpha": 0.1,
+  "trainable_parameters": 44024,
+  "input_patch": {
+    "scene": "Main Data Sets/138.tif",
+    "lr_shape": [
+      1,
+      4,
+      32,
+      32
+    ],
+    "sr_shape": [
+      1,
+      4,
+      128,
+      128
+    ]
+  },
+  "verification": {
+    "weights_genuinely_changed": true,
+    "total_l1_weight_delta": 370.816054,
+    "outputs_differ_numerically": true,
+    "loss_decreased": true,
+    "initial_loss": 0.008211,
+    "final_loss": 0.002824
+  },
+  "before_training": {
+    "mean_absolute_difference": 0.002661,
+    "max_absolute_difference": 0.014818,
+    "residual_magnitude": 0.02661,
+    "observation_reconstruction_loss": 0.005703,
+    "sam_deg": 0.6221,
+    "sam_rad": 0.010857,
+    "spectral_consistency_score": 0.873092
+  },
+  "after_training": {
+    "mean_absolute_difference": 0.003446,
+    "max_absolute_difference": 0.099825,
+    "residual_magnitude": 0.034457,
+    "observation_reconstruction_loss": 0.001539,
+    "sam_deg": 0.2519,
+    "sam_rad": 0.004397,
+    "spectral_consistency_score": 0.946518
+  },
+  "improvement_pct": {
+    "reconstruction_loss_delta_pct": -73.01,
+    "sam_delta_pct": -59.5,
+    "spectral_consistency_delta_pct": 8.41
+  }
+}

@@ -1,0 +1,28 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+# Temporary and local runtime data
+temp/
+temp_download/
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE and Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# NOTE: Do NOT ignore SEN2SRLite_RGBN_x4/, Main Data Sets/, or ocr_gsr_results/
+# These contain required offline model weights, certified samples, and validation metrics.

@@ -1,0 +1,187 @@
+{
+  "experiment": "VISTAARA High-Resolution Reference Validation & Ablation",
+  "timestamp": "2026-09-29 13:42:51",
+  "total_runtime_seconds": 350.42,
+  "reference_dataset": {
+    "source": "SEN2NAIPv2 Certified Ground-Truth Aerial Reference",
+    "file": "SEN2SRLite_RGBN_x4/SEN2SRLite/NonReference_RGBN_x4/example_data.safetensor",
+    "lr_shape": [
+      4,
+      128,
+      128
+    ],
+    "hr_shape": [
+      4,
+      512,
+      512
+    ],
+    "native_gsd": "10 m (LR) to 2.5 m (HR)"
+  },
+  "quantitative_metrics": {
+    "Bicubic Baseline": {
+      "MAE": 0.014247,
+      "RMSE": 0.022241,
+      "PSNR_dB": 33.06,
+      "SSIM": 0.813,
+      "SAM_deg": 1.803,
+      "SAM_rad": 0.031469,
+      "Spectral_Consistency": 0.674787,
+      "Spatial_Edge_Corr": 0.4834,
+      "Obs_Recon_Loss": 0.003508,
+      "Obs_SAM_deg": 0.5303
+    },
+    "SEN2SRLite (Candidate A)": {
+      "MAE": 0.013695,
+      "RMSE": 0.021494,
+      "PSNR_dB": 33.35,
+      "SSIM": 0.8311,
+      "SAM_deg": 1.7989,
+      "SAM_rad": 0.031397,
+      "Spectral_Consistency": 0.675393,
+      "Spatial_Edge_Corr": 0.5081,
+      "Obs_Recon_Loss": 0.002162,
+      "Obs_SAM_deg": 0.4573
+    },
+    "SEN2SRLite + OCR-GSR": {
+      "MAE": 0.013991,
+      "RMSE": 0.021878,
+      "PSNR_dB": 33.2,
+      "SSIM": 0.8307,
+      "SAM_deg": 1.8105,
+      "SAM_rad": 0.0316,
+      "Spectral_Consistency": 0.67368,
+      "Spatial_Edge_Corr": 0.5028,
+      "Obs_Recon_Loss": 0.001765,
+      "Obs_SAM_deg": 0.4717
+    }
+  },
+  "ablation_study": {
+    "alpha_0.02": {
+      "alpha": 0.02,
+      "gated": {
+        "MAE": 0.013719,
+        "PSNR": 33.34,
+        "SAM_deg": 1.7994
+      },
+      "unmodulated": {
+        "MAE": 0.013736,
+        "PSNR": 33.34,
+        "SAM_deg": 1.8016
+      }
+    },
+    "alpha_0.05": {
+      "alpha": 0.05,
+      "gated": {
+        "MAE": 0.013797,
+        "PSNR": 33.31,
+        "SAM_deg": 1.8021
+      },
+      "unmodulated": {
+        "MAE": 0.013874,
+        "PSNR": 33.28,
+        "SAM_deg": 1.8136
+      }
+    },
+    "alpha_0.08": {
+      "alpha": 0.08,
+      "gated": {
+        "MAE": 0.013907,
+        "PSNR": 33.25,
+        "SAM_deg": 1.8067
+      },
+      "unmodulated": {
+        "MAE": 0.014068,
+        "PSNR": 33.17,
+        "SAM_deg": 1.832
+      }
+    },
+    "alpha_0.10": {
+      "alpha": 0.1,
+      "gated": {
+        "MAE": 0.013991,
+        "PSNR": 33.2,
+        "SAM_deg": 1.8105
+      },
+      "unmodulated": {
+        "MAE": 0.014219,
+        "PSNR": 33.08,
+        "SAM_deg": 1.8469
+      }
+    },
+    "alpha_0.15": {
+      "alpha": 0.15,
+      "gated": {
+        "MAE": 0.014229,
+        "PSNR": 33.03,
+        "SAM_deg": 1.8225
+      },
+      "unmodulated": {
+        "MAE": 0.01465,
+        "PSNR": 32.77,
+        "SAM_deg": 1.8912
+      }
+    },
+    "alpha_0.20": {
+      "alpha": 0.2,
+      "gated": {
+        "MAE": 0.014496,
+        "PSNR": 32.8,
+        "SAM_deg": 1.8371
+      },
+      "unmodulated": {
+        "MAE": 0.015139,
+        "PSNR": 32.38,
+        "SAM_deg": 1.9428
+      }
+    }
+  },
+  "reliability_analysis": {
+    "mean_reliability": 0.8698,
+    "pearson_correlation_with_error": -0.3488999903202057,
+    "spearman_correlation_with_error": -0.4596,
+    "mae_high_reliability_region": 0.005247,
+    "mae_nominal_reliability_region": 0.012329,
+    "mae_low_reliability_region": 0.021564,
+    "high_reliability_area_pct": 9.65,
+    "nominal_reliability_area_pct": 64.96,
+    "low_reliability_area_pct": 25.39
+  },
+  "downstream_ndvi": {
+    "Reference": {
+      "Mean_NDVI": 0.2141,
+      "MAE_vs_Ref": 0.0,
+      "RMSE_vs_Ref": 0.0
+    },
+    "Bicubic Baseline": {
+      "Mean_NDVI": 0.2105,
+      "MAE_vs_Ref": 0.02736,
+      "RMSE_vs_Ref": 0.04637
+    },
+    "SEN2SRLite (Candidate A)": {
+      "Mean_NDVI": 0.2111,
+      "MAE_vs_Ref": 0.02716,
+      "RMSE_vs_Ref": 0.0453
+    },
+    "SEN2SRLite + OCR-GSR": {
+      "Mean_NDVI": 0.2112,
+      "MAE_vs_Ref": 0.02731,
+      "RMSE_vs_Ref": 0.04542
+    },
+    "Bicubic": {
+      "Mean_NDVI": 0.2105,
+      "MAE_vs_Ref": 0.02736,
+      "RMSE_vs_Ref": 0.04637
+    },
+    "SEN2SRLite": {
+      "Mean_NDVI": 0.2111,
+      "MAE_vs_Ref": 0.02716,
+      "RMSE_vs_Ref": 0.0453
+    }
+  },
+  "generated_figures": [
+    "ocr_gsr_results/validation\\highres_comparison_rgb.png",
+    "ocr_gsr_results/validation\\highres_error_heatmaps.png",
+    "ocr_gsr_results/validation\\highres_ndvi_comparison.png",
+    "ocr_gsr_results/validation\\highres_reliability_vs_error.png"
+  ]
+}
