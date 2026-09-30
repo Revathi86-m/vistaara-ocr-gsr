@@ -524,7 +524,9 @@ if active_source is not None:
                     device = "cpu"
                 result = multimodel_core.process_scene_pipeline(active_source, device=device, status_callback=update_status, performance_mode=perf_mode, compute_candidate_b=compare_models)
                 result["total_elapsed_s"] = time.time() - t0
-                st.session_state.pipeline_cache[cache_key] = result
+                import gc
+                st.session_state.pipeline_cache = {cache_key: result}
+                gc.collect()
                 st.session_state.active_scene_name = active_name
                 status_box.success("Pipeline Complete!")
                 progress_bar.progress(100)
@@ -949,8 +951,10 @@ elif st.session_state.current_stage == "01  ENHANCE":
                         src_to_run = active_source
                     else:
                         _fb_path = f"Main Data Sets/{target_alias}"
-                        src_to_run = _fb_path if os.path.exists(_fb_path) else "Main Data Sets/138.tif"
-                    st.session_state.pipeline_cache[c_key] = multimodel_core.process_scene_pipeline(src_to_run, device=device, performance_mode=perf_mode, compute_candidate_b=compare_models)
+                    _proc_res = multimodel_core.process_scene_pipeline(src_to_run, device=device, performance_mode=perf_mode, compute_candidate_b=compare_models)
+                    import gc
+                    st.session_state.pipeline_cache = {c_key: _proc_res}
+                    gc.collect()
                     st.session_state.active_scene_name = target_alias
                     st.rerun()
         st.stop()
