@@ -2132,25 +2132,29 @@ elif st.session_state.current_stage == "Export":
             </p>
         </div>
         """, unsafe_allow_html=True)
-        export_df = pd.DataFrame([
+        rel_b = cached_res.get("rel_b")
+        cov_b = cached_res.get("cov_b")
+
+        export_rows = [
             {"Parameter": "Input Scene", "Value": active_name},
             {"Parameter": "Coordinate Reference System (CRS)", "Value": str(meta['crs'])},
             {"Parameter": "Native Dimensions", "Value": f"{meta['width']}x{meta['height']}"},
             {"Parameter": "Super-Resolved Dimensions", "Value": f"{meta['width']*4}x{meta['height']*4}"},
             {"Parameter": "Candidate A M_recon (Observation)", "Value": f"{rel_a['recon_metrics']['mean_score']:.6f}"},
-            {"Parameter": "Candidate B M_recon (Observation)", "Value": f"{rel_b['recon_metrics']['mean_score']:.6f}"},
+            {"Parameter": "Candidate B M_recon (Observation)", "Value": f"{rel_b['recon_metrics']['mean_score']:.6f}" if rel_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Candidate A M_spec (Spectral)", "Value": f"{rel_a['spectral_metrics']['mean_score']:.6f}"},
-            {"Parameter": "Candidate B M_spec (Spectral)", "Value": f"{rel_b['spectral_metrics']['mean_score']:.6f}"},
+            {"Parameter": "Candidate B M_spec (Spectral)", "Value": f"{rel_b['spectral_metrics']['mean_score']:.6f}" if rel_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Candidate A M_spat (Spatial)", "Value": f"{rel_a['spatial_metrics']['mean_score']:.6f}"},
-            {"Parameter": "Candidate B M_spat (Spatial)", "Value": f"{rel_b['spatial_metrics']['mean_score']:.6f}"},
+            {"Parameter": "Candidate B M_spat (Spatial)", "Value": f"{rel_b['spatial_metrics']['mean_score']:.6f}" if rel_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Candidate A M_stab (Stability)", "Value": f"{rel_a['stability_metrics']['mean_score']:.6f}"},
-            {"Parameter": "Candidate B M_stab (Stability)", "Value": f"{rel_b['stability_metrics']['mean_score']:.6f}"},
+            {"Parameter": "Candidate B M_stab (Stability)", "Value": f"{rel_b['stability_metrics']['mean_score']:.6f}" if rel_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Candidate A Composite R", "Value": f"{rel_a['composite_stats']['mean']:.6f}"},
-            {"Parameter": "Candidate B Composite R", "Value": f"{rel_b['composite_stats']['mean']:.6f}"},
+            {"Parameter": "Candidate B Composite R", "Value": f"{rel_b['composite_stats']['mean']:.6f}" if rel_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Candidate A High-Rel Coverage (R>=0.93)", "Value": f"{cov_a['high_pct']:.2f}%"},
-            {"Parameter": "Candidate B High-Rel Coverage (R>=0.93)", "Value": f"{cov_b['high_pct']:.2f}%"},
+            {"Parameter": "Candidate B High-Rel Coverage (R>=0.93)", "Value": f"{cov_b['high_pct']:.2f}%" if cov_b else "Deferred (Run Model Comparison to compute)"},
             {"Parameter": "Urban Decision Gating FP Reduction", "Value": f"{cached_res['urban_a']['gated']['fp_reduction_pct']:.2f}%" if cached_res['urban_a'].get('has_urban', False) else "N/A"}
-        ])
+        ]
+        export_df = pd.DataFrame(export_rows)
         csv_bytes = export_df.to_csv(index=False).encode('utf-8')
         st.download_button(
             "📥 Download Decision Summary (CSV)",
