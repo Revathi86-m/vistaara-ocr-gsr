@@ -545,7 +545,7 @@ def compute_candidate_b_for_scene(res_dict, device="cpu", status_callback=None, 
     p2, p98 = np.percentile(lr_norm[:3], (2, 98))
     sr_b_pil, _, _ = make_rgb_pil(sr_b_norm, p2, p98)
 
-    res_dict["sr_b_norm"] = sr_b_norm
+    res_dict["sr_b_norm"] = sr_b_norm.astype(np.float16)
     res_dict["rel_b"] = rel_b
     res_dict["ind_b"] = ind_b
     res_dict["cov_b"] = cov_b
@@ -720,11 +720,11 @@ def process_scene_pipeline(input_source, device="cpu", status_callback=None, per
         "profile": profile,
         "scale_factor": scale_factor,
         "norm_notes": norm_notes,
-        "lr_norm": lr_norm,
+        "lr_norm": lr_norm.astype(np.float16),
         "scl_raw": scl_raw,
         "scl_available": meta.get("scl_available", scl_raw is not None),
         "source_type": meta.get("source_type", "VISTAARA_13BAND_STANDARD"),
-        "sr_a_norm": sr_a_norm,
+        "sr_a_norm": sr_a_norm.astype(np.float16),
         "sr_b_norm": None,
         "sr_ocr_norm": None,
         "rel_a": rel_a,

@@ -691,11 +691,20 @@ def evaluate_sr_reliability(
     if scl_image is not None:
         diagnostics = diagnose_difficult_regions(scl_image, comp_res['reliability_map'], component_maps, scale=scale)
 
+    # Free heavy memory structures immediately after extracting diagnostics
+    del component_maps
+    # Purge huge arrays from sub-dictionaries
+    for d in [recon_res, spec_res, spat_res, stab_res]:
+        for k in ['score_map', 'error_map_10m', 'sam_rad_10m', 'dir_score_map', 'hf_score_map']:
+            d.pop(k, None)
+
+    import gc
+    gc.collect()
+
     total_time = time.time() - total_start
 
     return {
-        'reliability_map': comp_res['reliability_map'],
-        'component_maps': component_maps,
+        'reliability_map': comp_res['reliability_map'].astype(np.float16),
         'composite_stats': comp_res,
         'recon_metrics': recon_res,
         'spectral_metrics': spec_res,
