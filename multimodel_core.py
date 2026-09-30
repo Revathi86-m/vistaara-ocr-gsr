@@ -40,7 +40,7 @@ from reliability_engine import (
 )
 from input_adapter import StandardizedScene, GeoTIFFAdapter, InputInspector
 
-MODEL_DIR = r".\SEN2SRLite_RGBN_x4\SEN2SRLite\NonReference_RGBN_x4"
+MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "SEN2SRLite_RGBN_x4", "SEN2SRLite", "NonReference_RGBN_x4")
 
 class UnconstrainedCNNWrapper(torch.nn.Module):
     """
