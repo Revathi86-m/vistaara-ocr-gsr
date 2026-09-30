@@ -113,13 +113,14 @@ def load_both_candidates(device="cpu"):
     return loaded_result
 
 
-def run_tiled_sr(lr_tensor, model, device="cpu", scale=4, patch_size=128, overlap=16, progress_callback=None, batch_size=16):
+def run_tiled_sr(lr_tensor, model, device="cpu", scale=4, patch_size=128, overlap=16, progress_callback=None, batch_size=4):
     """
     Overlapped, window-blended tiled super-resolution inference.
     Preserves exact dimensions (C, H*scale, W*scale) and blends tile borders
     using a 2D linear-tapering trapezoidal window to eliminate boundary seams.
     Accelerated with batched execution and torch.inference_mode().
     """
+    import gc
     try:
         if device == "cpu" and torch.get_num_threads() < 4:
             torch.set_num_threads(min(4, os.cpu_count() or 4))
@@ -176,6 +177,7 @@ def run_tiled_sr(lr_tensor, model, device="cpu", scale=4, patch_size=128, overla
                 progress_callback(min(1.0, (b_start + len(b_coords)) / total_patches))
 
     sr_image = accum_output / torch.clamp(accum_weight, min=1e-6)
+    gc.collect()
     return np.clip(sr_image.numpy(), 0.0, 1.0)
 
 

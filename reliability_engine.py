@@ -338,9 +338,9 @@ def compute_local_perturbation_stability(
     scale=4,
     sigma=0.01,
     seed=42,
-    sample_patches=16,
+    sample_patches=4,
     tau_stab=0.10,
-    batch_size=16
+    batch_size=2
 ):
     """
     Test output stability of the SR model by measuring spatial deviation from
@@ -623,7 +623,7 @@ def evaluate_sr_reliability(
     device,
     scl_image=None,
     scale=4,
-    sample_patches=16
+    sample_patches=4
 ):
     """
     Complete end-to-end execution of the Reliability Engine.
